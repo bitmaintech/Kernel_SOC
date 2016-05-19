@@ -34,7 +34,8 @@ modules.builtin
 *.gcno
 doit
 uImage
-zynq-zed.dtb
+devicetree.dtb
+xilinx_zynq_defconfig-origin
 #
 # Top-level generic files
 #

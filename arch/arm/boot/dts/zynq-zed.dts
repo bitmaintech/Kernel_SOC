@@ -24,7 +24,7 @@
 		spi0 = &ps7_qspi_0;
 	} ;
 	chosen {
-		bootargs = "console=ttyPS0,115200 root=/dev/ram rw earlyprintk";
+		bootargs = "console=ttyPS0,115200 ramdisk_size=40960 root=/dev/ram rw earlyprintk";
 		linux,stdout-path = "/amba@0/serial@e0001000";
 	} ;
 	cpus {
