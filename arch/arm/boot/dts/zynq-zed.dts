@@ -58,7 +58,7 @@
 	} ;
 	ps7_ddr_0: memory@0 {
 		device_type = "memory";
-		reg = <0x0 0x20000000>;
+		reg = <0x0 0x40000000>;
 	} ;
 	ps7_axi_interconnect_0: amba@0 {
 		#address-cells = <1>;
