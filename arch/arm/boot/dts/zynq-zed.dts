@@ -21,10 +21,9 @@
 	aliases {
 		ethernet0 = &ps7_ethernet_0;
 		serial0 = &ps7_uart_1;
-		spi0 = &ps7_qspi_0;
 	} ;
 	chosen {
-		bootargs = "mem=1008M console=ttyPS0,115200 ramdisk_size=40960 root=/dev/ram rw earlyprintk";
+		bootargs = "noinitrd mem=1008M console=ttyPS0,115200 root=/dev/mtdblock1 rootfstype=jffs2 rw rootwait";
 		linux,stdout-path = "/amba@0/serial@e0001000";
 	} ;
 	cpus {
@@ -171,50 +170,48 @@
 			interrupts = <0 2 4>;
 			reg = <0xf8f02000 0x1000>;
 		} ;
-		ps7_qspi_0: ps7-qspi@e000d000 {
-			clock-names = "ref_clk", "pclk";
-			clocks = <&clkc 10>, <&clkc 43>;
-			compatible = "xlnx,zynq-qspi-1.0";
-			interrupt-parent = <&ps7_scugic_0>;
-			interrupts = <0 19 4>;
-			is-dual = <0>;
-			num-cs = <1>;
-			reg = <0xe000d000 0x1000>;
-			xlnx,fb-clk = <0x1>;
-			xlnx,qspi-mode = <0x0>;
-			#address-cells = <1>;
-			#size-cells = <0>;
-			flash@0 {
-				compatible = "n25q128";
-				reg = <0x0>;
-				spi-tx-bus-width = <1>;
-				spi-rx-bus-width = <4>;
-				spi-max-frequency = <50000000>;
-				#address-cells = <1>;
-				#size-cells = <1>;
-				partition@qspi-fsbl-uboot {
-					label = "qspi-fsbl-uboot";
-					reg = <0x0 0x100000>;
-				};
-				partition@qspi-linux {
-					label = "qspi-linux";
-					reg = <0x100000 0x500000>;
-				};
-				partition@qspi-device-tree {
-					label = "qspi-device-tree";
-					reg = <0x600000 0x20000>;
-				};
-				partition@qspi-rootfs {
-					label = "qspi-rootfs";
-					reg = <0x620000 0x5E0000>;
-				};
-				partition@qspi-bitstream {
-					label = "qspi-bitstream";
-					reg = <0xC00000 0x400000>;
-				};
-			};
+        ps7_smcc_0: ps7-smcc@e000e000 {
+            #address-cells = <1>;
+            #size-cells = <1>;
+            arm,addr25 = <0x0>;
+            arm,nor-chip-sel0 = <0x0>;
+            arm,nor-chip-sel1 = <0x0>;
+            arm,sram-chip-sel0 = <0x0>;
+            arm,sram-chip-sel1 = <0x0>;
+            clock-names = "memclk", "aclk";
+            clocks = <&clkc 11>, <&clkc 44>;
+            compatible = "arm,pl353-smc-r2p1";
+            interrupt-parent = <&ps7_scugic_0>;
+            interrupts = <0 18 4>;
+            ranges ;
+            reg = <0xe000e000 0x1000>;
+            ps7_nand_0: ps7-nand@e1000000 {
+                arm,nand-cycle-t0 = <0x4>;
+                arm,nand-cycle-t1 = <0x4>;
+                arm,nand-cycle-t2 = <0x1>;
+                arm,nand-cycle-t3 = <0x2>;
+                arm,nand-cycle-t4 = <0x2>;
+                arm,nand-cycle-t5 = <0x2>;
+                arm,nand-cycle-t6 = <0x4>;
+                compatible = "arm,pl353-nand-r2p1";
+                reg = <0xe1000000 0x1000000>;
+                #address-cells = <0x1>;
+                #size-cells = <0x1>;
 
-		} ;
+                partition@BOOT.bin-env-dts-kernel {
+                    label = "BOOT.bin-env-dts-kernel";
+                    reg = <0x0 0x2000000>;
+                };
+                partition@angstram-rootfs {
+                    label = "angstram-rootfs";
+                    reg = <0x2000000 0x9000000>;
+                };
+                partition@upgrade-rootfs {
+                    label = "upgrade-rootfs";
+                    reg = <0xB000000 0x5000000>;
+                };
+            } ;
+        } ;
 		ps7_qspi_linear_0: ps7-qspi-linear@fc000000 {
 			clock-names = "ref_clk", "aper_clk";
 			clocks = <&clkc 10>, <&clkc 43>;
