@@ -385,6 +385,7 @@ static int bcm54xx_config_init(struct phy_device *phydev)
 {
 	int reg, err;
 
+    printk("\n%s\n", __FUNCTION__);
 	reg = phy_read(phydev, MII_BCM54XX_ECR);
 	if (reg < 0)
 		return reg;
@@ -712,7 +713,7 @@ static struct phy_driver broadcom_drivers[] = {
 }, {
 	.phy_id		= PHY_ID_BCM5461,
 	.phy_id_mask	= 0xfffffff0,
-	.name		= "Broadcom BCM5461",
+    .name     = "Broadcom BCM50612",
 	.features	= PHY_GBIT_FEATURES |
 			  SUPPORTED_Pause | SUPPORTED_Asym_Pause,
 	.flags		= PHY_HAS_MAGICANEG | PHY_HAS_INTERRUPT,

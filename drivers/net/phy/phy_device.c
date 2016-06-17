@@ -300,14 +300,14 @@ static int get_phy_id(struct mii_bus *bus, int addr, u32 *phy_id,
 		return -EIO;
 
 	*phy_id = (phy_reg & 0xffff) << 16;
-
-	/* Grab the bits from PHYIR2, and put them in the lower half */
+	
+    /* Grab the bits from PHYIR2, and put them in the lower half */
 	phy_reg = mdiobus_read(bus, addr, MII_PHYSID2);
 	if (phy_reg < 0)
 		return -EIO;
 
 	*phy_id |= (phy_reg & 0xffff);
-
+    printk("------------- phy_id = 0x%x\n", *phy_id);
 	return 0;
 }
 
