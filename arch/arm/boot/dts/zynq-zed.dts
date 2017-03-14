@@ -23,7 +23,8 @@
 		serial0 = &ps7_uart_1;
 	} ;
 	chosen {
-		bootargs = "noinitrd mem=1008M console=ttyPS0,115200 root=/dev/mtdblock1 rootfstype=jffs2 rw rootwait";
+	/*	bootargs = "noinitrd mem=1008M console=ttyPS0,115200 root=/dev/mtdblock1 rootfstype=jffs2 rw rootwait";*/
+		bootargs = "noinitrd mem=908M console=ttyPS0,115200 root=ubi0:rootfs ubi.mtd=1 rootfstype=ubifs rw rootwait";
 		linux,stdout-path = "/amba@0/serial@e0001000";
 	} ;
 	cpus {
@@ -210,6 +211,12 @@
                     label = "upgrade-rootfs";
                     reg = <0xB000000 0x5000000>;
                 };
+/*
+				partition@upgrade-files {
+					label = "upgrade-files";
+					reg = <0xEC00000 0x1400000>;
+				};
+*/
             } ;
         } ;
 		ps7_qspi_linear_0: ps7-qspi-linear@fc000000 {
