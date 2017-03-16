@@ -24,7 +24,7 @@
 	} ;
 	chosen {
 	/*	bootargs = "noinitrd mem=1008M console=ttyPS0,115200 root=/dev/mtdblock1 rootfstype=jffs2 rw rootwait";*/
-		bootargs = "noinitrd mem=908M console=ttyPS0,115200 root=ubi0:rootfs ubi.mtd=1 rootfstype=ubifs rw rootwait";
+	/*	bootargs = "noinitrd mem=908M console=ttyPS0,115200 root=ubi0:rootfs ubi.mtd=1 rootfstype=ubifs rw rootwait";*/
 		linux,stdout-path = "/amba@0/serial@e0001000";
 	} ;
 	cpus {
